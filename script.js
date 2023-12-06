@@ -7,35 +7,27 @@ createButtons();
 
 function createButtons() {
    for (let i = 0; i < numberOfButtons; ++i) {
+      arrayNumbersOfButtons[i] = numberOfButtons - i;
       const newButtons = document.createElement("button");
       document.querySelector("#btnContainer").appendChild(newButtons);
       newButtons.textContent = `Button ${i + 1}`;
-   }
-   fillTheArray();
-}
-
-function fillTheArray() {
-   for (let i = 0; i < numberOfButtons; ++i) {
-      arrayNumbersOfButtons[i] = numberOfButtons - i;
-   }
-}
-
-button.addEventListener("click", winnerOrNot);
-
-function winnerOrNot(event) {
-   if (arrayNumbersOfButtons.length === 0) {
-      event.preventDefault();
-   } else {
-      const indexRandomNumber = Math.floor(Math.random() * arrayNumbersOfButtons.length);
-      let saveIndexRandomNumber = arrayNumbersOfButtons[indexRandomNumber];
-      if (numberOfButtons == saveIndexRandomNumber) {
-         result.textContent = "You found him, this button is a winner !";
-         result.style.color = "green";
-      } else {
-         result.textContent = "This button is a loser !";
-         result.style.color = "red";
-      }
-      arrayNumbersOfButtons.splice(indexRandomNumber, 1);
+      newButtons.className = "btn btn-secondary";
+      newButtons.addEventListener("click", (event) => {
+         const indexRandomNumber = Math.floor(Math.random() * arrayNumbersOfButtons.length);
+         let saveIndexRandomNumber = arrayNumbersOfButtons[indexRandomNumber];
+         if (numberOfButtons == saveIndexRandomNumber) {
+            result.textContent = "You found him, this button is a winner !";
+            result.style.color = "green";
+            newButtons.style.backgroundColor = "green";
+            newButtons.disabled = "true";
+         } else {
+            result.textContent = "This button is a loser !";
+            result.style.color = "red";
+            newButtons.style.backgroundColor = "red";
+            newButtons.disabled = "true";
+         }
+         arrayNumbersOfButtons.splice(indexRandomNumber, 1); // am facut splice deoarece trebuie sa elimin indexul respectiv, sa nu mai fie generat si a 2 a oara.
+      });
    }
 }
 
