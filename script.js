@@ -1,6 +1,5 @@
 let numberOfButtons = 3;
 let arrayNumbersOfButtons = [];
-const button = document.querySelector(".firstContainer");
 const result = document.querySelector(".result");
 
 createButtons();
