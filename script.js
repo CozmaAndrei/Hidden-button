@@ -1,51 +1,64 @@
 let numberOfButtons = 3;
-let arrayNumberOfButtons = [];
+let arrayNumbersOfButtons = [];
+const button = document.querySelector(".firstContainer");
+const result = document.querySelector(".result");
 
 createButtons();
 
 function createButtons() {
-    for (let i = 0; i < numberOfButtons; ++i) {
-        arrayNumberOfButtons[i] = numberOfButtons - i;
-        const button = document.createElement("button");
-        document.querySelector("#containerOfButtons").appendChild(button);
-        button.textContent = `Button ${i + 1}`;
-        button.classList.add("btn", "btn-secondary");
-        button.addEventListener("click", buttonWinnerOrLoser);
-        const disableButtons = document.getElementsByTagName("button");
-        disableButtons[i].addEventListener("click", function(event) {
-            event.target.disabled = true;
-        });
-
-        function buttonWinnerOrLoser() {
-            const indexRandomNumber = Math.floor(Math.random() * arrayNumberOfButtons.length);
-            const saveIndexRandomNumber = arrayNumberOfButtons[indexRandomNumber];
-            if (numberOfButtons == saveIndexRandomNumber) {
-                alert(`You found him ! Button ${i + 1} is the WINNER !`);
-                button.classList.add("btn", "btn-success");
-                arrayNumberOfButtons.splice(indexRandomNumber, 1);
-            } else {
-                alert(`Button ${i + 1} is the LOSER !`);
-                button.classList.add("btn", "btn-danger");
-                arrayNumberOfButtons.splice(indexRandomNumber, 1);
-            }
-        }
-    }
+   for (let i = 0; i < numberOfButtons; ++i) {
+      const newButtons = document.createElement("button");
+      document.querySelector("#btnContainer").appendChild(newButtons);
+      newButtons.textContent = `Button ${i + 1}`;
+   }
+   fillTheArray();
 }
 
-function deleteButtons() {
-    const buttonsFromContainer = document.getElementById("containerOfButtons");
-    while (buttonsFromContainer.firstChild) {
-        buttonsFromContainer.removeChild(buttonsFromContainer.firstChild);
-    }
+function fillTheArray() {
+   for (let i = 0; i < numberOfButtons; ++i) {
+      arrayNumbersOfButtons[i] = numberOfButtons - i;
+   }
+}
+
+button.addEventListener("click", winnerOrNot);
+
+function winnerOrNot(event) {
+   if (arrayNumbersOfButtons.length === 0) {
+      event.preventDefault();
+   } else {
+      const indexRandomNumber = Math.floor(Math.random() * arrayNumbersOfButtons.length);
+      let saveIndexRandomNumber = arrayNumbersOfButtons[indexRandomNumber];
+      if (numberOfButtons == saveIndexRandomNumber) {
+         result.textContent = "You found him, this button is a winner !";
+         result.style.color = "green";
+      } else {
+         result.textContent = "This button is a loser !";
+         result.style.color = "red";
+      }
+      arrayNumbersOfButtons.splice(indexRandomNumber, 1);
+   }
+}
+
+function deleteContainer() {
+   const deleteDiv = document.getElementById("btnContainer");
+   deleteDiv.remove();
+}
+
+function createContainer() {
+   const newDiv = document.createElement("div");
+   document.querySelector(".firstContainer").appendChild(newDiv);
+   newDiv.setAttribute("id", "btnContainer");
 }
 
 function generateButtons() {
-    numberOfButtons = Number(input.value);
-    if (numberOfButtons < 2) {
-        alert("Please enter a valid number to generate buttons!");
-    } else {
-        deleteButtons();
-        createButtons();
-    }
-    input.value = "";
+   numberOfButtons = Number(input.value);
+   if (numberOfButtons < 2) {
+      alert("Please enter a valid number to generate buttons!");
+   } else {
+      result.textContent = "";
+      deleteContainer();
+      createContainer()
+      createButtons();
+   }
+   input.value = "";
 }
