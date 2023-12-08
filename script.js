@@ -11,23 +11,25 @@ function createButtons() {
       document.querySelector("#btnContainer").appendChild(newButtons);
       newButtons.textContent = `Button ${i + 1}`;
       newButtons.className = "btn btn-secondary";
-      newButtons.addEventListener("click", (event) => {
-         const indexRandomNumber = Math.floor(Math.random() * arrayNumbersOfButtons.length);
-         let saveIndexRandomNumber = arrayNumbersOfButtons[indexRandomNumber];
-         if (numberOfButtons == saveIndexRandomNumber) {
-            result.textContent = "You found him, this button is a winner !";
-            result.style.color = "green";
-            newButtons.style.backgroundColor = "green";
-            newButtons.disabled = "true";
-         } else {
-            result.textContent = "This button is a loser !";
-            result.style.color = "red";
-            newButtons.style.backgroundColor = "red";
-            newButtons.disabled = "true";
-         }
-         arrayNumbersOfButtons.splice(indexRandomNumber, 1); // am facut splice deoarece trebuie sa elimin indexul respectiv, sa nu mai fie generat si a 2 a oara.
-      });
+      newButtons.addEventListener("click", isWinnerOrIsLoser);
    }
+}
+
+function isWinnerOrIsLoser(event) {
+   const indexRandomNumber = Math.floor(Math.random() * arrayNumbersOfButtons.length);
+   let saveIndexRandomNumber = arrayNumbersOfButtons[indexRandomNumber];
+   if (numberOfButtons == saveIndexRandomNumber) {
+      result.textContent = "You found him, this button is a winner !";
+      result.style.color = "green";
+      event.target.style.backgroundColor = "green";
+      event.target.disabled = "true";
+   } else {
+      result.textContent = "This button is a loser !";
+      result.style.color = "red";
+      event.target.style.backgroundColor = "red";
+      event.target.disabled = "true";
+   }
+   arrayNumbersOfButtons.splice(indexRandomNumber, 1); // am facut splice deoarece trebuie sa elimin indexul respectiv, sa nu mai fie generat si a 2 a oara.
 }
 
 function deleteContainer() {
