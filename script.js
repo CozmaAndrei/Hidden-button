@@ -29,7 +29,7 @@ function isWinnerOrIsLoser(event) {
       event.target.style.backgroundColor = "red";
       event.target.disabled = "true";
    }
-   arrayNumbersOfButtons.splice(indexRandomNumber, 1); // am facut splice deoarece trebuie sa elimin indexul respectiv, sa nu mai fie generat si a 2 a oara.
+   arrayNumbersOfButtons.splice(indexRandomNumber, 1);
 }
 
 function deleteContainer() {
